@@ -28,6 +28,7 @@ public class HelloBatchMain {
 		HashMap<String, JobParameter> parameters = new HashMap<String, JobParameter>();
 		parameters.put("run", new JobParameter("c"));
 		launcher.run(job, new JobParameters(parameters));
+		context.close();
 	}
 
 }
