@@ -1,7 +1,8 @@
 package batch.launch;
 
-import java.util.HashMap;
-
+import batch.config.DatabaseRepositoryProducer;
+import batch.job.CreateCustomerTasklet;
+import batch.job.HelloWorldJobProducer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
@@ -12,8 +13,7 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import batch.config.DatabaseRepositoryProducer;
-import batch.job.HelloWorldJobProducer;
+import java.util.HashMap;
 
 public class HelloBatchMain {
 
@@ -21,7 +21,7 @@ public class HelloBatchMain {
 			throws JobExecutionAlreadyRunningException, JobRestartException,
 			JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-				HelloWorldJobProducer.class, DatabaseRepositoryProducer.class);
+				HelloWorldJobProducer.class, DatabaseRepositoryProducer.class, CreateCustomerTasklet.class);
 		Job job = context.getBean("helloWorldJob", Job.class);
 
 		JobLauncher launcher = context.getBean(JobLauncher.class);

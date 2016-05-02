@@ -17,10 +17,23 @@ public class HelloWorldJobProducer {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
+	@Autowired
+	private CreateCustomerTasklet createCustomerTasklet;
+
 	@Bean(name = "helloWorldJob")
 	public Job getHelloWorldJob() {
-		return jobBuilderFactory.get("helloWorldJob").start(getHelloStep())
-				.next(getSpaceStep()).next(getWorldStep()).build();
+		return jobBuilderFactory.get("helloWorldJob")
+				.start(getCreateCustomerStep())
+				.next(getHelloStep())
+				.next(getSpaceStep())
+				.next(getWorldStep())
+				.build();
+	}
+
+	@Bean
+	public Step getCreateCustomerStep() {
+		return stepBuilderFactory.get("createCustomer")
+				.tasklet(createCustomerTasklet).build();
 	}
 
 	@Bean
